@@ -4,7 +4,7 @@
   "description": "A lib to replace and rehydrate sensitive data in text",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -p ./src/tsconfig.json",
+    "build": "tsc -p ./tsconfig.json",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "test": "jest tests --config=./tests/jest.config.js"
   },

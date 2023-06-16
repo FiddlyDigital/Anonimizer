@@ -3,7 +3,7 @@ module.exports = {
     preset: 'ts-jest/presets/js-with-ts',
     transform: {
         '^.+\\.ts?$': ['ts-jest', {
-            tsconfig: './src/tsconfig.json',
+            tsconfig: './tsconfig.json',
         }]
     },
     testEnvironment: 'node',
