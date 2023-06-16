@@ -18,14 +18,14 @@ Response from 3rd-party Service:
 
 > Dear Ava,
 > I hope this email finds you well. I have an important request on behalf of Charlotte from our team. Charlotte would greatly appreciate it if you could reach out to Benjamin at safeexample1@example.com and ask him to call her regarding the Purchase Order (PO) that needs to be sorted urgently.
-> Additionally, Charlotte would like to inquire about the progress and any updates regarding the "#Alligator Deal." It seems to be a significant opportunity, and she would like to stay informed and ensure everything is on track.
+> Additionally, Charlotte would like to inquire about the progress and any updates regarding the #Alligator Deal. She would like to stay informed and ensure everything is on track.
 > Best Regards,
 
 Response Rehydrated, with original context and values restored:
 
 > Dear Jim, 
 > I hope this email finds you well. I have an important request on behalf of Maria from our team. Maria would greatly appreciate it if you could reach out to Philip at cfo@client.com and ask him to call her regarding the Purchase Order (PO) that needs to be sorted urgently.
->Additionally, Maria would like to inquire about the progress and any updates regarding the #Acquisition Deal. It seems to be a significant opportunity, and she would like to stay informed and ensure everything is on track.
+>Additionally, Maria would like to inquire about the progress and any updates regarding the #Acquisition Deal. She would like to stay informed and ensure everything is on track.
 > Best Regards,
 
 ## Usage
@@ -48,8 +48,8 @@ let [safeText, runValueMap] = anonimizer.anonimize(originalInput, opts);
 
 ### Rehydrate
 
-Pass the string to to have the values rehydrated, as well as the map used in the original anonimzation.
-Will return the text with sanitized values replaced with their original values.
+* Pass the string to to have the values rehydrated, as well as the map used in the original anonimzation.
+* Will return the text with sanitized values replaced with their original values.
 
 ``` ts
 let rehydratedText = anonimizer.reHydrate(safeText, runValueMap);
@@ -67,4 +67,4 @@ npm run build
 
 ## Accuracy
 
-As this deals with text, and text parsing is always twiggy - it's impossible to guarentee 100% safety and security. No guarentee or warranty, implied or otherwise are offered. The author(s) of this library take no responsibility for any loss that may results from usage of this library. Please always review data you store and send to 3rd party systems to ensure they comply with legal requirements for your jurisdiction, industry and obligations.
+As this deals with text, and text parsing is always _twiggy_ - it's impossible to guarentee 100% safety and security. No guarentee or warranty, implied or otherwise are offered. The author(s) of this library take no responsibility for any loss that may results from usage of this library. Please always review data you store and send to 3rd party systems to ensure they comply with legal requirements for your jurisdiction, industry and obligations.
