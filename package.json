@@ -1,14 +1,16 @@
 {
-  "name": "anonimizer",
+  "name": "@speakingsoftware/anonimizer",
   "version": "1.0.0",
   "description": "A lib to replace and rehydrate sensitive data in text",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "type": "module",
+  "files" : ["dist", "README.md", "package.json"],
   "scripts": {
     "build": "tsc -p ./tsconfig.json",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "test": "jest tests --config=./tests/jest.config.js"
   },
-  "author": "Philip Gannon",
+  "author": "SpeakingSoftware / Philip Gannon",
   "dependencies": {
     "compromise": "^14.9.0"
   },

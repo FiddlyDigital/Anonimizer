@@ -10,7 +10,7 @@ Original Prompt:
 
 > Write an email to Jim, asking them to email Philip at cfo@client.com to call Maria about getting that PO sorted. Also ask about the progress of the #Acquisition Deal.
 
-Sanitized Prompt, safe to send to 3rd/party Service:
+Sanitized Prompt (via Anonomize method) safe to send to 3rd/party Service:
 
 > Write an email to Ava asking them to email Benjamin at safeexample1@example.com to call Charlotte about getting that PO sorted. Also ask about the progress of the #Alligator Deal.
 
