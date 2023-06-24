@@ -1,15 +1,14 @@
-import { Anonimizer, ReplacementOptions } from "../src";
+import { Anonimizer, Features } from "../src";
 
 describe('testing index file', () => {
     test('When using the same input, Anonomisation then rehydrations should produce the exact same text.', () => {
         const anonimizer = new Anonimizer();
-        const opts = new ReplacementOptions();
-        opts.emails = opts.urls = opts.hashTags = true;
         
-        const originalInput = "Email Jim at big@executive.com and tell him to call Brian at 555-123-456 #yolo";
+        const originalInput = "Email Jim at big@executive.com and tell them to call Brian at 555-123-456 #yolo ! Also tell Jim that Meg needs to talk to them.";
         console.log("input:", originalInput);
 
-        let [safeText, valueMap] = anonimizer.anonimize(originalInput, opts);
+        const featuresToReplace = new Array(Features.People, Features.Emails, Features.Urls, Features.HashTags);
+        let [safeText, valueMap] = anonimizer.anonimize(originalInput, featuresToReplace);
         console.log("safeText:", safeText);
 
         expect(safeText != originalInput);

@@ -1,25 +1,15 @@
-import type { ReplacementOptions } from './replacementOptions';
+import { Features } from "./features";
 
 export class RunValueMap {
-    opts: ReplacementOptions;
+    public Features: Features[];
+    public Values: Map<Features, Map<string, string>>;
 
-    acronyms: Map<string, string>;
-    emails: Map<string, string>;
-    hashTags: Map<string, string>;
-    organizations: Map<string, string>;
-    people: Map<string, string>;
-    phonenumbers: Map<string, string>;
-    urls: Map<string, string>;
+    constructor (features: Features[]) {
+        this.Features = features;
+        this.Values = new Map<Features, Map<string, string>>();
 
-    constructor (options: ReplacementOptions) {
-        this.opts = options;
-
-        this.acronyms = new Map<string, string>();
-        this.emails = new Map<string, string>();
-        this.hashTags = new Map<string, string>();
-        this.organizations = new Map<string, string>();
-        this.people = new Map<string, string>();
-        this.phonenumbers = new Map<string, string>();
-        this.urls = new Map<string, string>();
+        features.forEach(feature => {
+            this.Values.set(feature, new Map<string, string>());
+        });
     }
 };
