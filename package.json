@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc -p ./tsconfig.json",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
-    "test": "jest tests --config=./tests/jest.config.js"
+    "test": "jest tests --config=./tests/jest.config.cjs"
   },
   "author": "SpeakingSoftware / Philip Gannon",
   "dependencies": {
