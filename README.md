@@ -1,10 +1,10 @@
 # Anonimizer
 
-A library used to replace sensitive information in text, and then later be able to rehydrate that information in derived text. This library works entirely in memory without interacting with any 3rd-party services.
+A library used to replace sensitive information in text, and then later to rehydrate that information in derived text. This library works entirely in memory without interacting with any 3rd-party services.
 
-The intended use case is to santize input for public AI Services, and then be able to replace the sanitized value in the AI Output with the AI Values.
+The intended usecase is to santize input that will be passes to public 3rd-party Services, and then be able to replace the sanitized value in the output with the original safe values. A prime example of this would be creating prompts to send to ChatGPT (or similiar).
 
-## Example
+## Example Usecase
 
 Original Prompt:
 
@@ -30,41 +30,37 @@ Response Rehydrated, with original context and values restored:
 
 ## Usage
 
-* Create an instance of Anonimizer, and set your replacement options
 ``` ts
-const anonimizer = new Anonimizer();
-```
+// Create instance
+const anonimizer : IAnonimizer = new Anonimizer();
 
-### Anonimize
+/**
+ * Anonimize
+ * Pass the string to be sanitize, along as the list of features to be replaced.
+ * Will return the sanitized version, and a map of what features/values were replaced.
+ */
+const featuresToReplace = new Array(Features.People, Features.Emails, Features.Urls, Features.HashTags);
+let [safeText, runValueMap] = anonimizer.anonimize(originalInput, featuresToReplace);
 
-* Pass the string to be sanitize
-* Will return the sanitized version, and a map of what features/values where replaced.
-
-``` ts
-const opts = new ReplacementOptions();
-opts.emails = opts.urls = opts.hashTags = true;
-let [safeText, runValueMap] = anonimizer.anonimize(originalInput, opts);
-```
-
-### Rehydrate
-
-* Pass the string to to have the values rehydrated, as well as the map used in the original anonimzation.
-* Will return the text with sanitized values replaced with their original values.
-
-``` ts
+/**
+ * Rehydrate
+ * Pass the string to to have the values rehydrated, as well as the map used in the original anonimzation.
+ * Will return the text with sanitized values replaced with their original values.
+ */
 let rehydratedText = anonimizer.reHydrate(safeText, runValueMap);
 ```
 
-## Build
-* Install Dependencies
+### Build
 ``` console
 npm i
-```
-* Build
-``` console
 npm run build
 ```
 
-## Accuracy
+### Test
+``` console
+npm run test
+```
 
-As this deals with text, and text parsing is always _twiggy_ - it's impossible to guarentee 100% safety and security. No guarentee or warranty, implied or otherwise are offered. The author(s) of this library take no responsibility for any loss that may results from usage of this library. Please always review data you store and send to 3rd party systems to ensure they comply with legal requirements for your jurisdiction, industry and obligations.
+## Warning
+
+It's impossible to guarentee 100% safety and security when dealing with text replacing. No guarentee or warranty, implied or otherwise are offered. The author(s) of this library take no responsibility or nor accept andy liability for any loss that may result from usage of this library. Please always review the data you store and send to 3rd party systems, to ensure the transit ans storage complies with the legal requirements for your jurisdiction, industry and business obligations.

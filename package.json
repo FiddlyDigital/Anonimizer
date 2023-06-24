@@ -1,16 +1,19 @@
 {
   "name": "@speakingsoftware/anonimizer",
   "version": "1.0.0",
-  "description": "A lib to replace and rehydrate sensitive data in text",
+  "description": "A lib to anonimize text and later rehydrate derived text",
   "main": "dist/index.js",
   "type": "module",
   "files" : ["dist", "README.md", "package.json"],
+  "repository": {"url": "https://github.com/FiddlyDigital/Anonimizer"},
+  "author": "SpeakingSoftware / Philip Gannon",
+  "license": "ISC",
+  "keywords": ["anonimize", "sanitize", "prompt", "data", "data security", "text", "string"],
   "scripts": {
     "build": "tsc -p ./tsconfig.json",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "test": "jest tests --config=./tests/jest.config.cjs"
   },
-  "author": "SpeakingSoftware / Philip Gannon",
   "dependencies": {
     "compromise": "^14.9.0"
   },
