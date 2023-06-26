@@ -9,6 +9,8 @@ import { Feature, RunValueMap } from '../models';
  * A class to both anonimize and rehydrate previously anonimized data; and it's derivatives
  */
 export class Anonimizer implements IAnonimizer {
+    private readonly dataMap: Map<Feature, string[]>;
+
     // PG: This is the anonimization order. Remember when rehydrating to run in the REVERSE order!
     private readonly runOrder: Feature[] = [
         Feature.People,
@@ -19,6 +21,16 @@ export class Anonimizer implements IAnonimizer {
         Feature.Urls,
         Feature.Acronyms
     ];
+
+    public constructor (customFeatureDate?: Map<Feature, string[]>) {
+        this.dataMap = dataMap;
+
+        if (customFeatureDate !== undefined && customFeatureDate.size > 0) {
+            customFeatureDate.forEach((value: string[], key: Feature) => {
+                this.dataMap.set(key, value);
+            })
+        }
+    }
 
     /**
      * Anonimizes sensitive data
@@ -33,7 +45,7 @@ export class Anonimizer implements IAnonimizer {
         this.runOrder.forEach(feature => {
             if (featuresToReplace.includes(feature)) {
                 const valueMap = runMap.Values.get(feature);
-                const safeValues = dataMap.get(feature);
+                const safeValues = this.dataMap.get(feature);
 
                 if (valueMap !== undefined && safeValues !== undefined) {
                     const featureInstances: string[] = this.getNamedFeatureInstancesWithinText(output, feature);
