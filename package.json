@@ -1,6 +1,6 @@
 {
   "name": "@speakingsoftware/anonimizer",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A lib to anonimize text and later rehydrate derived text",
   "main": "dist/index.js",
   "type": "module",

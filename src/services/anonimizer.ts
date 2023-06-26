@@ -4,6 +4,7 @@ import type Two from 'compromise/types/view/two';
 import type { IAnonimizer } from './interfaces/IAnonimizer';
 import { dataMap } from '../data';
 import { Feature, RunValueMap } from '../models';
+import { ErrorMessages } from '../util';
 
 /**
  * A class to both anonimize and rehydrate previously anonimized data; and it's derivatives
@@ -42,12 +43,12 @@ export class Anonimizer implements IAnonimizer {
     public anonimize (input: string, featuresToReplace: Feature[]): [string, RunValueMap] {
         if (input === undefined ||
             input.length === 0) {
-            throw new Error('anonimizer.anonimize - input needs to be a valid string value.');
+            throw new Error(`anonimizer.anonimize - ${ErrorMessages.InputNullOrEmpty}`);
         }
 
         if (featuresToReplace === undefined ||
             featuresToReplace.length === 0) {
-            throw new Error('anonimizer.anonimize - featuresToReplace needs be a valid array with at least one value.');
+            throw new Error(`anonimizer.anonimize - ${ErrorMessages.FeaturesToReplaceNullOrEmpty}`);
         }
 
         let output = input;
@@ -86,7 +87,7 @@ export class Anonimizer implements IAnonimizer {
     public reHydrate (input: string, runMap: RunValueMap): string {
         if (input === undefined ||
             input.length === 0) {
-            throw new Error('anonimizer.reHydrate - input needs to be a valid string value.');
+            throw new Error(`anonimizer.reHydrate - ${ErrorMessages.InputNullOrEmpty}`);
         }
 
         if (runMap === undefined ||
@@ -94,7 +95,7 @@ export class Anonimizer implements IAnonimizer {
             runMap.Features === undefined ||
             runMap.Features === null ||
             runMap.Features.length === 0) {
-            throw new Error('anonimizer.reHydrate - runMap needs to be a valid RunValueMap with at least one feature set.');
+            throw new Error(`anonimizer.reHydrate - ${ErrorMessages.RunMapNullOrEmpty}`);
         }
 
         let output = input;
@@ -147,7 +148,7 @@ export class Anonimizer implements IAnonimizer {
             // Only try and change back to the originally entered value, if we have one!
             const matchingValue = featureMapValues.get(instanceValue)
             if (matchingValue === undefined) {
-                console.log(`Couldn't rehydrate ${instanceValue}`);
+                console.log(`${ErrorMessages.CouldntRehydrate} ${instanceValue}`);
                 continue;
             }
 
@@ -165,7 +166,7 @@ export class Anonimizer implements IAnonimizer {
     private getNamedFeatureInstancesWithinText (input: string, feature: Feature): string[] {
         const nlpParsedInput: Three = nlp(input);
         if (nlpParsedInput === undefined) {
-            throw new Error('Anonimizer.getNamedFeatureInstancesWithinText() - Compromise unable to parse input.');
+            throw new Error(`${ErrorMessages.CompromiseCantParse}`);
         }
 
         let featureNLP: Two | null = null;
