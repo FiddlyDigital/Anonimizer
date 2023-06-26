@@ -1,12 +1,12 @@
-import { Features } from "./features";
+import type { Feature } from './feature';
 
 export class RunValueMap {
-    public Features: Features[];
-    public Values: Map<Features, Map<string, string>>;
+    public Features: Feature[];
+    public Values: Map<Feature, Map<string, string>>;
 
-    constructor (features: Features[]) {
+    constructor (features: Feature[]) {
         this.Features = features;
-        this.Values = new Map<Features, Map<string, string>>();
+        this.Values = new Map<Feature, Map<string, string>>();
 
         features.forEach(feature => {
             this.Values.set(feature, new Map<string, string>());

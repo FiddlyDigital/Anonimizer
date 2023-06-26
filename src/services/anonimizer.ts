@@ -3,21 +3,21 @@ import type Three from 'compromise/types/view/three';
 import type Two from 'compromise/types/view/two';
 import type { IAnonimizer } from './interfaces/IAnonimizer';
 import { dataMap } from '../data';
-import { Features, RunValueMap } from '../models';
+import { Feature, RunValueMap } from '../models';
 
 /**
  * A class to both anonimize and rehydrate previously anonimized data; and it's derivatives
  */
 export class Anonimizer implements IAnonimizer {
     // PG: This is the anonimization order. Remember when rehydrating to run in the REVERSE order!
-    private runOrder : Features[] = [
-        Features.People,
-        Features.Organizations,
-        Features.Phonenumbers,
-        Features.HashTags,
-        Features.Emails,
-        Features.Urls,
-        Features.Acronyms
+    private readonly runOrder: Feature[] = [
+        Feature.People,
+        Feature.Organizations,
+        Feature.Phonenumbers,
+        Feature.HashTags,
+        Feature.Emails,
+        Feature.Urls,
+        Feature.Acronyms
     ];
 
     /**
@@ -26,18 +26,18 @@ export class Anonimizer implements IAnonimizer {
      * @param opts Flags representing what kinds of features of the text to replace
      * @returns A version of the input that has the required sensitive data replaced, as well as a map of what values got replaced / and their replacements
      */
-    public anonimize (input: string, featuresToReplace : Features[]): [string, RunValueMap] {
+    public anonimize (input: string, featuresToReplace: Feature[]): [string, RunValueMap] {
         let output = input;
         const runMap = new RunValueMap(featuresToReplace);
 
         this.runOrder.forEach(feature => {
-            if (featuresToReplace.indexOf(feature) > -1) { 
-                let valueMap = runMap.Values.get(feature);
-                let safeValues = dataMap.get(feature);
+            if (featuresToReplace.includes(feature)) {
+                const valueMap = runMap.Values.get(feature);
+                const safeValues = dataMap.get(feature);
 
                 if (valueMap !== undefined && safeValues !== undefined) {
                     const featureInstances: string[] = this.getNamedFeatureInstancesWithinText(output, feature);
-                    output = this.anonimizationReplace(output, featureInstances, valueMap, safeValues); 
+                    output = this.anonimizationReplace(output, featureInstances, valueMap, safeValues);
                 }
             }
         });
@@ -56,11 +56,11 @@ export class Anonimizer implements IAnonimizer {
 
         // PG: Important! Need to rehydrate in reverse order of anonymization
         this.runOrder.reverse().forEach(feature => {
-            if (runMap.Features.indexOf(feature) > -1) { 
-                let valueMap = runMap.Values.get(feature);
+            if (runMap.Features.includes(feature)) {
+                const valueMap = runMap.Values.get(feature);
                 if (valueMap !== undefined) {
                     const featureInstances: string[] = this.getNamedFeatureInstancesWithinText(output, feature);
-                    output = this.hydrationReplace(output, featureInstances, valueMap); 
+                    output = this.hydrationReplace(output, featureInstances, valueMap);
                 }
             }
         });
@@ -108,30 +108,30 @@ export class Anonimizer implements IAnonimizer {
         return array.indexOf(value) === index;
     }
 
-    private getNamedFeatureInstancesWithinText (input: string, feature: Features): string[] {
+    private getNamedFeatureInstancesWithinText (input: string, feature: Feature): string[] {
         const nlpParsedInput: Three = nlp(input);
         let featureNLP: Two | null = null;
 
         switch (feature) {
-            case Features.Acronyms:
+            case Feature.Acronyms:
                 featureNLP = nlpParsedInput.acronyms();
                 break;
-            case Features.Emails:
+            case Feature.Emails:
                 featureNLP = nlpParsedInput.emails();
                 break;
-            case Features.HashTags:
+            case Feature.HashTags:
                 featureNLP = nlpParsedInput.hashTags();
                 break;
-            case Features.Organizations:
+            case Feature.Organizations:
                 featureNLP = nlpParsedInput.organizations();
                 break;
-            case Features.People:
+            case Feature.People:
                 featureNLP = nlpParsedInput.people();
                 break;
-            case Features.Phonenumbers:
+            case Feature.Phonenumbers:
                 featureNLP = nlpParsedInput.phoneNumbers();
                 break;
-            case Features.Urls:
+            case Feature.Urls:
                 featureNLP = nlpParsedInput.urls();
                 break;
         }

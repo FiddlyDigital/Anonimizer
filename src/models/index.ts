@@ -1,4 +1,4 @@
-import { Features } from './features';
+import { Feature } from './feature';
 import { RunValueMap } from './runValueMap';
 
-export { Features, RunValueMap };
+export { Feature, RunValueMap };

@@ -1,4 +1,4 @@
-import { Features } from '../models';
+import { Feature } from '../models';
 import acronyms from './acronyms.json';
 import emails from './emails.json';
 import hashtags from './hashtags.json';
@@ -7,15 +7,13 @@ import people from './people.json';
 import phonenumbers from './phonenumbers.json';
 import urls from './urls.json';
 
-const dataMap = new Map<Features, string[]>();
-dataMap.set(Features.Acronyms, acronyms);
-dataMap.set(Features.Emails, emails);
-dataMap.set(Features.HashTags, hashtags);
-dataMap.set(Features.Organizations, organizations);
-dataMap.set(Features.People, people);
-dataMap.set(Features.Phonenumbers, phonenumbers);
-dataMap.set(Features.Urls, urls);
+const dataMap = new Map<Feature, string[]>();
+dataMap.set(Feature.Acronyms, acronyms);
+dataMap.set(Feature.Emails, emails);
+dataMap.set(Feature.HashTags, hashtags);
+dataMap.set(Feature.Organizations, organizations);
+dataMap.set(Feature.People, people);
+dataMap.set(Feature.Phonenumbers, phonenumbers);
+dataMap.set(Feature.Urls, urls);
 
 export { dataMap };
-
-
