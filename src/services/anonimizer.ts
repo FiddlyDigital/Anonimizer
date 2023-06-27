@@ -23,12 +23,12 @@ export class Anonimizer implements IAnonimizer {
         Feature.Acronyms
     ];
 
-    public constructor (customFeatureDate?: Map<Feature, string[]>) {
+    public constructor (customFeatureData?: Map<Feature, string[]>) {
         this.dataMap = dataMap;
 
-        if (customFeatureDate !== undefined &&
-            customFeatureDate.size > 0) {
-            customFeatureDate.forEach((value: string[], key: Feature) => {
+        if (customFeatureData !== undefined &&
+            customFeatureData.size > 0) {
+            customFeatureData.forEach((value: string[], key: Feature) => {
                 this.dataMap.set(key, value);
             })
         }
