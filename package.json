@@ -1,6 +1,6 @@
 {
   "name": "@speakingsoftware/anonimizer",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A lib to anonimize text and later rehydrate derived text",
   "main": "dist/index.js",
   "type": "module",
@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsc -p ./tsconfig.json",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
-    "test": "jest tests --config=./tests/jest.config.cjs"
+    "test": "jest tests --verbose --config=./tests/jest.config.cjs"
   },
   "dependencies": {
     "compromise": "^14.9.0"

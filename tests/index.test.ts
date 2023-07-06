@@ -1,4 +1,4 @@
-import { Anonimizer, Feature, IAnonimizer, RunValueMap } from "../src";
+import { Anonimizer, Feature, IAnonimizer } from "../src";
 let anonimizer : IAnonimizer;
 
 beforeAll(() => {
@@ -28,7 +28,7 @@ describe('Test Anomization and Rehydration', () => {
         Additionally, Charlotte would like to inquire about the progress and any updates regarding the #Alligator Deal. She would like to stay informed and ensure everything is on track.
         Best Regards,`
         let rehydratedText = anonimizer.reHydrate(promptResponse, runValueMap);
-        expect(rehydratedText === `Dear Jim,,
+        expect(rehydratedText === `Dear Jim,
         I hope this email finds you well. I have an important request on behalf of Maria from our team. Maria would greatly appreciate it if you could reach out to Philip at cfo@client.com and ask him to call her regarding the Purchase Order (PO) that needs to be sorted urgently.     
         Additionally, Maria would like to inquire about the progress and any updates regarding the #Acquisition Deal. She would like to stay informed and ensure everything is on track.
         Best Regards,`);
