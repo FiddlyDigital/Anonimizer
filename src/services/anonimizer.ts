@@ -25,7 +25,7 @@ export class Anonimizer implements IAnonimizer {
      * CTor for Anonimizer
      * @param customFeatureData? Optional Map to change the default safe data for given features to custom data
      */
-     public constructor (customFeatureData?: Map<Feature, string[]>) {
+    public constructor (customFeatureData?: Map<Feature, string[]>) {
         this.dataMap = dataMap;
 
         if (customFeatureData !== undefined &&
