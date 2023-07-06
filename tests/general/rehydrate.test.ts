@@ -1,4 +1,4 @@
-import { Anonimizer, Feature, IAnonimizer, RunValueMap } from "../src";
+import { Anonimizer, Feature, IAnonimizer, RunValueMap } from "../../src";
 let anonimizer: IAnonimizer;
 
 beforeAll(() => {

@@ -1,4 +1,4 @@
-import { Anonimizer, Feature, IAnonimizer } from "../src";
+import { Anonimizer, Feature, IAnonimizer } from "../../src";
 let anonimizer: IAnonimizer;
 
 beforeAll(() => {
