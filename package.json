@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsc -p ./tsconfig.json",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
-    "test": "jest tests --config=./tests/jest.config.cjs"
+    "test": "jest tests --verbose --config=./tests/jest.config.cjs"
   },
   "dependencies": {
     "compromise": "^14.9.0"

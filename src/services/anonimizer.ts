@@ -1,10 +1,8 @@
-import nlp from 'compromise';
-import type Three from 'compromise/types/view/three';
-import type Two from 'compromise/types/view/two';
 import type { IAnonimizer } from './interfaces/IAnonimizer';
 import { dataMap } from '../data';
 import { Feature, RunValueMap } from '../models';
-import { ErrorMessages } from '../util';
+import { ErrorMessages } from '../constants';
+import { FeatureHelper } from './featureHelper';
 
 /**
  * A class to both anonimize and rehydrate previously anonimized data; and it's derivatives
@@ -23,6 +21,10 @@ export class Anonimizer implements IAnonimizer {
         Feature.Acronyms
     ];
 
+    /**
+     * CTor for Anonimizer
+     * @param customFeatureDate Optional Map to change the default safe data for given features to custom data
+     */
     public constructor (customFeatureDate?: Map<Feature, string[]>) {
         this.dataMap = dataMap;
 
@@ -67,7 +69,7 @@ export class Anonimizer implements IAnonimizer {
                 continue;
             }
 
-            const featureInstances: string[] = this.getNamedFeatureInstancesWithinText(output, feature);
+            const featureInstances: string[] = FeatureHelper.GetFeatureInstances(output, feature);
             if (featureInstances.length === 0) {
                 continue;
             }
@@ -82,7 +84,7 @@ export class Anonimizer implements IAnonimizer {
      * Replaces previously anonimized data in a string with the original data
      * @param input The safe string to be reydrated
      * @param runMap The runMap from the original anonimization run
-     * @returns A version of the input string that has all safe data replaced with the original data
+     * @returns A version of the input string that has all 'safe' data replaced with the original sensitive values
      */
     public reHydrate (input: string, runMap: RunValueMap): string {
         if (input === undefined ||
@@ -111,7 +113,7 @@ export class Anonimizer implements IAnonimizer {
                 continue;
             }
 
-            const featureInstances: string[] = this.getNamedFeatureInstancesWithinText(output, feature);
+            const featureInstances: string[] = FeatureHelper.GetFeatureInstances(output, feature);
             if (featureInstances.length === 0) {
                 continue;
             }
@@ -126,7 +128,7 @@ export class Anonimizer implements IAnonimizer {
         let output = input;
 
         featureInstances.filter(this.onlyUnique).forEach((instance: string, i: number) => {
-            // lets replace all instances of the sensitive value with a safe one
+            // Lets replace all instances of the sensitive value with a safe one
             const sensitiveValueAsRegex = new RegExp(instance, 'g');
             output = output.replace(sensitiveValueAsRegex, safeValues[i]);
             featureMapValues.set(safeValues[i], instance);
@@ -140,19 +142,14 @@ export class Anonimizer implements IAnonimizer {
 
         for (const instance of featureInstances.filter(this.onlyUnique)) {
             // Replace the Safe values (the instance in this case) with the originally entered value
-            let instanceValue: string = instance.trim().replace(/[,]/, '');
-            if (instanceValue.charAt(instanceValue.length - 1) === '.') {
-                instanceValue = instanceValue.substring(0, instanceValue.length - 1);
-            }
-
-            // Only try and change back to the originally entered value, if we have one!
-            const matchingValue = featureMapValues.get(instanceValue)
+            // However, only try and change back to the originally entered value - if we have one!
+            const matchingValue = featureMapValues.get(instance)
             if (matchingValue === undefined) {
-                console.log(`${ErrorMessages.CouldntRehydrate} ${instanceValue}`);
+                console.log(`${ErrorMessages.CouldntRehydrate} ${instance}`);
                 continue;
             }
 
-            const matchingValueAsRegex = new RegExp(instanceValue, 'g');
+            const matchingValueAsRegex = new RegExp(instance, 'g');
             output = output.replace(matchingValueAsRegex, matchingValue);
         }
 
@@ -161,44 +158,5 @@ export class Anonimizer implements IAnonimizer {
 
     private onlyUnique (value: string, index: number, array: any[]): boolean {
         return array.indexOf(value) === index;
-    }
-
-    private getNamedFeatureInstancesWithinText (input: string, feature: Feature): string[] {
-        const nlpParsedInput: Three = nlp(input);
-        if (nlpParsedInput === undefined) {
-            throw new Error(`${ErrorMessages.CompromiseCantParse}`);
-        }
-
-        let featureNLP: Two | null = null;
-        switch (feature) {
-            case Feature.Acronyms:
-                featureNLP = nlpParsedInput.acronyms();
-                break;
-            case Feature.Emails:
-                featureNLP = nlpParsedInput.emails();
-                break;
-            case Feature.HashTags:
-                featureNLP = nlpParsedInput.hashTags();
-                break;
-            case Feature.Organizations:
-                featureNLP = nlpParsedInput.organizations();
-                break;
-            case Feature.People:
-                featureNLP = nlpParsedInput.people();
-                break;
-            case Feature.Phonenumbers:
-                featureNLP = nlpParsedInput.phoneNumbers();
-                break;
-            case Feature.Urls:
-                featureNLP = nlpParsedInput.urls();
-                break;
-        }
-
-        if (featureNLP === undefined ||
-            featureNLP === null) {
-            return [];
-        }
-
-        return featureNLP.out('array');
     }
 }
