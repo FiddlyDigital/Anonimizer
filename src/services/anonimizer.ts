@@ -23,7 +23,7 @@ export class Anonimizer implements IAnonimizer {
 
     /**
      * CTor for Anonimizer
-     * @param customFeatureData? Optional Map to change the default safe data for given features to custom data
+     * @param { Map<Feature, string[]> }customFeatureData? Optional Map to change the default safe data for given features to custom data
      */
     public constructor (customFeatureData?: Map<Feature, string[]>) {
         this.dataMap = dataMap;
@@ -38,9 +38,9 @@ export class Anonimizer implements IAnonimizer {
 
     /**
      * Anonimizes sensitive data
-     * @param input The input with potentially unsafe or sensitive data that to be anonimized
-     * @param opts Flags representing what kinds of features of the text to replace
-     * @returns A version of the input that has the required sensitive data replaced, as well as a map of what values got replaced / and their replacements
+     * @param { string } input The input with potentially unsafe or sensitive data that to be anonimized
+     * @param { Feature[] } featuresToReplace Flags representing what kinds of features of the text to replace
+     * @returns { [string,RunValueMap] } A version of the input that has the required sensitive data replaced, as well as a map of what values got replaced / and their replacements
      */
     public anonimize (input: string, featuresToReplace: Feature[]): [string, RunValueMap] {
         if (input === undefined ||
@@ -82,9 +82,9 @@ export class Anonimizer implements IAnonimizer {
 
     /**
      * Replaces previously anonimized data in a string with the original data
-     * @param input The safe string to be reydrated
-     * @param runMap The runMap from the original anonimization run
-     * @returns A version of the input string that has all 'safe' data replaced with the original sensitive values
+     * @param { string } input The safe string to be reydrated
+     * @param { RunValueMap } runMap The runMap from the original anonimization run
+     * @returns { string } A version of the input string that has all 'safe' data replaced with the original sensitive values
      */
     public reHydrate (input: string, runMap: RunValueMap): string {
         if (input === undefined ||
