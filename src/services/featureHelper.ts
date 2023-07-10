@@ -15,9 +15,9 @@ export class FeatureHelper {
 
     /**
      * Will extract a instances of a feature from a given string
-     * @param input The string to parse
-     * @param feature The Feature to look for in the input string
-     * @returns A string[] with all instances of a named feature from a string
+     * @param { string } input The string to parse
+     * @param { Feature } feature The Feature to look for in the input string
+     * @returns { string[] } An array with all instances of a named feature from a string
      */
     public static GetFeatureInstances (input: string, feature: Feature): string[] {
         let result: string[] = [];
