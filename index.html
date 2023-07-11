@@ -12,13 +12,32 @@
 <div class="col-content">
 <div class="tsd-page-title">
 <h2>@speakingsoftware/anonimizer</h2></div>
-<div class="tsd-panel tsd-typography"><a id="md:anonimizer" class="tsd-anchor"></a><h1><a href="#md:anonimizer">Anonimizer</a></h1><p>A library used to replace sensitive information in text, and then later to rehydrate that information in derived text. This library works entirely in memory without interacting with any 3rd-party services.</p>
-<p>The intended usecase is to santize input that will be passes to public 3rd-party Services, and then be able to replace the sanitized value in the output with the original safe values. A prime example of this would be creating prompts to send to ChatGPT (or similiar).</p>
+<div class="tsd-panel tsd-typography"><p><a name="readme-top"></a></p>
+<div align="center">
+  <h1 align="center">Anonimizer</h1>
+
+  <p align="center">
+    A js library used to replace sensitive information in text, and then later to rehydrate that information in derived text.<br />This library works entirely in memory without interacting with any 3rd-party services.
+    <br />
+    <a href="https://fiddlydigital.github.io/Anonimizer/"><strong>Developer Docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://www.npmjs.com/package/@speakingsoftware/anonimizer">View on NPM</a>
+    ·
+    <a href="https://github.com/FiddlyDigital/Anonimizer/issues">Report Bug or Request a Feature</a>
+  </p>
+</div>
+
+<a id="md:description" class="tsd-anchor"></a><h2><a href="#md:description">Description</a></h2><p>The intended use is to sanitize input that will be passed to public 3rd-party Services, and then be able to replace the sanitized value in the output with the original safe values. A prime example of this would be creating prompts to send to ChatGPT (or similiar). See Use Case Example below.</p>
+<a id="md:usage" class="tsd-anchor"></a><h2><a href="#md:usage">Usage</a></h2><a id="md:example" class="tsd-anchor"></a><h3><a href="#md:example">Example</a></h3><pre><code class="language-js"><span class="hl-0">// Import via ESM</span><br/><span class="hl-1">import</span><span class="hl-2"> { </span><span class="hl-3">Anonimizer</span><span class="hl-2"> } </span><span class="hl-1">from</span><span class="hl-2"> </span><span class="hl-4">&#39;@speakingsoftware/anonimizer&#39;</span><br/><span class="hl-0">// or Require via CJS</span><br/><span class="hl-0">// const Anonimizer = require(&#39;@speakingsoftware/anonimizer&#39;).Anonimizer</span><br/><br/><span class="hl-0">// Create instance</span><br/><span class="hl-5">const</span><span class="hl-2"> </span><span class="hl-6">anonimizer</span><span class="hl-2"> = </span><span class="hl-5">new</span><span class="hl-2"> </span><span class="hl-7">Anonimizer</span><span class="hl-2">();</span><br/><br/><span class="hl-0">/**</span><br/><span class="hl-0"> * Anonimize</span><br/><span class="hl-0"> * Pass the string to be sanitize, along as the list of features to be replaced.</span><br/><span class="hl-0"> * Will return the sanitized version, and a map of what features/values were replaced.</span><br/><span class="hl-0"> */</span><br/><span class="hl-5">const</span><span class="hl-2"> </span><span class="hl-6">featuresToReplace</span><span class="hl-2"> = </span><span class="hl-5">new</span><span class="hl-2"> </span><span class="hl-7">Array</span><span class="hl-2">(</span><span class="hl-3">Features</span><span class="hl-2">.</span><span class="hl-3">People</span><span class="hl-2">, </span><span class="hl-3">Features</span><span class="hl-2">.</span><span class="hl-3">Emails</span><span class="hl-2">, </span><span class="hl-3">Features</span><span class="hl-2">.</span><span class="hl-3">Urls</span><span class="hl-2">, </span><span class="hl-3">Features</span><span class="hl-2">.</span><span class="hl-3">HashTags</span><span class="hl-2">);</span><br/><span class="hl-5">let</span><span class="hl-2"> [</span><span class="hl-3">safeText</span><span class="hl-2">, </span><span class="hl-3">runValueMap</span><span class="hl-2">] = </span><span class="hl-3">anonimizer</span><span class="hl-2">.</span><span class="hl-7">anonimize</span><span class="hl-2">(</span><span class="hl-3">originalInput</span><span class="hl-2">, </span><span class="hl-3">featuresToReplace</span><span class="hl-2">);</span><br/><br/><span class="hl-0">/**</span><br/><span class="hl-0"> * Rehydrate</span><br/><span class="hl-0"> * Pass the string to to have the values rehydrated, as well as the map used in the original anonimzation.</span><br/><span class="hl-0"> * Will return the text with sanitized values replaced with their original values.</span><br/><span class="hl-0"> */</span><br/><span class="hl-5">let</span><span class="hl-2"> </span><span class="hl-3">rehydratedText</span><span class="hl-2"> = </span><span class="hl-3">anonimizer</span><span class="hl-2">.</span><span class="hl-7">reHydrate</span><span class="hl-2">(</span><span class="hl-3">safeText</span><span class="hl-2">, </span><span class="hl-3">runValueMap</span><span class="hl-2">);</span>
+</code><button>Copy</button></pre>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="md:example-usecase" class="tsd-anchor"></a><h2><a href="#md:example-usecase">Example Usecase</a></h2><p>Original Prompt:</p>
 <blockquote>
 <p>Write an email to Jim, asking them to email Philip at <a href="mailto:cfo@client.com">cfo@client.com</a> to call Maria about getting that PO sorted. Also ask about the progress of the #Acquisition Deal.</p>
 </blockquote>
-<p>Sanitized Prompt (via Anonomize method) safe to send to 3rd/party Service:</p>
+<p>Sanitized Prompt (via <code>anonomize</code> method) safe to send to 3rd/party Service:</p>
 <blockquote>
 <p>Write an email to Ava asking them to email Benjamin at <a href="mailto:safeexample1@example.com">safeexample1@example.com</a> to call Charlotte about getting that PO sorted. Also ask about the progress of the #Alligator Deal.</p>
 </blockquote>
@@ -29,21 +48,23 @@ I hope this email finds you well. I have an important request on behalf of Charl
 Additionally, Charlotte would like to inquire about the progress and any updates regarding the #Alligator Deal. She would like to stay informed and ensure everything is on track.
 Best Regards,</p>
 </blockquote>
-<p>Response Rehydrated, with original context and values restored:</p>
+<p>Context and values restored, via the <code>reHydrate</code> method:</p>
 <blockquote>
 <p>Dear Jim, 
 I hope this email finds you well. I have an important request on behalf of Maria from our team. Maria would greatly appreciate it if you could reach out to Philip at <a href="mailto:cfo@client.com">cfo@client.com</a> and ask him to call her regarding the Purchase Order (PO) that needs to be sorted urgently.
 Additionally, Maria would like to inquire about the progress and any updates regarding the #Acquisition Deal. She would like to stay informed and ensure everything is on track.
 Best Regards,</p>
 </blockquote>
-<a id="md:usage" class="tsd-anchor"></a><h2><a href="#md:usage">Usage</a></h2><pre><code class="language-ts"><span class="hl-0">// Create instance</span><br/><span class="hl-1">const</span><span class="hl-2"> </span><span class="hl-3">anonimizer</span><span class="hl-2"> : </span><span class="hl-4">IAnonimizer</span><span class="hl-2"> = </span><span class="hl-1">new</span><span class="hl-2"> </span><span class="hl-5">Anonimizer</span><span class="hl-2">();</span><br/><br/><span class="hl-0">/**</span><br/><span class="hl-0"> * Anonimize</span><br/><span class="hl-0"> * Pass the string to be sanitize, along as the list of features to be replaced.</span><br/><span class="hl-0"> * Will return the sanitized version, and a map of what features/values were replaced.</span><br/><span class="hl-0"> */</span><br/><span class="hl-1">const</span><span class="hl-2"> </span><span class="hl-3">featuresToReplace</span><span class="hl-2"> = </span><span class="hl-1">new</span><span class="hl-2"> </span><span class="hl-5">Array</span><span class="hl-2">(</span><span class="hl-6">Features</span><span class="hl-2">.</span><span class="hl-6">People</span><span class="hl-2">, </span><span class="hl-6">Features</span><span class="hl-2">.</span><span class="hl-6">Emails</span><span class="hl-2">, </span><span class="hl-6">Features</span><span class="hl-2">.</span><span class="hl-6">Urls</span><span class="hl-2">, </span><span class="hl-6">Features</span><span class="hl-2">.</span><span class="hl-6">HashTags</span><span class="hl-2">);</span><br/><span class="hl-1">let</span><span class="hl-2"> [</span><span class="hl-6">safeText</span><span class="hl-2">, </span><span class="hl-6">runValueMap</span><span class="hl-2">] = </span><span class="hl-6">anonimizer</span><span class="hl-2">.</span><span class="hl-5">anonimize</span><span class="hl-2">(</span><span class="hl-6">originalInput</span><span class="hl-2">, </span><span class="hl-6">featuresToReplace</span><span class="hl-2">);</span><br/><br/><span class="hl-0">/**</span><br/><span class="hl-0"> * Rehydrate</span><br/><span class="hl-0"> * Pass the string to to have the values rehydrated, as well as the map used in the original anonimzation.</span><br/><span class="hl-0"> * Will return the text with sanitized values replaced with their original values.</span><br/><span class="hl-0"> */</span><br/><span class="hl-1">let</span><span class="hl-2"> </span><span class="hl-6">rehydratedText</span><span class="hl-2"> = </span><span class="hl-6">anonimizer</span><span class="hl-2">.</span><span class="hl-5">reHydrate</span><span class="hl-2">(</span><span class="hl-6">safeText</span><span class="hl-2">, </span><span class="hl-6">runValueMap</span><span class="hl-2">);</span>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<a id="md:from-source" class="tsd-anchor"></a><h3><a href="#md:from-source">From Source</a></h3><a id="md:build" class="tsd-anchor"></a><h4><a href="#md:build">Build</a></h4><pre><code class="language-console"><span class="hl-7">npm</span><span class="hl-2"> </span><span class="hl-4">i</span><br/><span class="hl-7">npm</span><span class="hl-2"> </span><span class="hl-4">run</span><span class="hl-2"> </span><span class="hl-4">build</span>
 </code><button>Copy</button></pre>
-<a id="md:build" class="tsd-anchor"></a><h3><a href="#md:build">Build</a></h3><pre><code class="language-console"><span class="hl-5">npm</span><span class="hl-2"> </span><span class="hl-7">i</span><br/><span class="hl-5">npm</span><span class="hl-2"> </span><span class="hl-7">run</span><span class="hl-2"> </span><span class="hl-7">build</span>
+<a id="md:test" class="tsd-anchor"></a><h4><a href="#md:test">Test</a></h4><pre><code class="language-console"><span class="hl-7">npm</span><span class="hl-2"> </span><span class="hl-4">run</span><span class="hl-2"> </span><span class="hl-4">test</span>
 </code><button>Copy</button></pre>
-<a id="md:test" class="tsd-anchor"></a><h3><a href="#md:test">Test</a></h3><pre><code class="language-console"><span class="hl-5">npm</span><span class="hl-2"> </span><span class="hl-7">run</span><span class="hl-2"> </span><span class="hl-7">test</span>
-</code><button>Copy</button></pre>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <a id="md:warning" class="tsd-anchor"></a><h2><a href="#md:warning">Warning</a></h2><p>It&#39;s impossible to guarentee 100% safety and security when dealing with text replacing. No guarentee or warranty, implied or otherwise are offered. The author(s) of this library take no responsibility or nor accept andy liability for any loss that may result from usage of this library. Please always review the data you store and send to 3rd party systems, to ensure the transit ans storage complies with the legal requirements for your jurisdiction, industry and business obligations.</p>
-</div></div>
+<p align="right">(<a href="#readme-top">back to top</a>)</p></div></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -65,15 +86,21 @@ Best Regards,</p>
 <ul>
 <li>
 <ul>
-<li><a href="#md:anonimizer"><span>Anonimizer</span></a></li>
+<li><a href="#md:description"><span>Description</span></a></li>
 <li>
 <ul>
-<li><a href="#md:example-usecase"><span>Example <wbr/>Usecase</span></a></li>
 <li><a href="#md:usage"><span>Usage</span></a></li>
 <li>
 <ul>
+<li><a href="#md:example"><span>Example</span></a></li></ul></li>
+<li><a href="#md:example-usecase"><span>Example <wbr/>Usecase</span></a></li>
+<li>
+<ul>
+<li><a href="#md:from-source"><span>From <wbr/>Source</span></a></li>
+<li>
+<ul>
 <li><a href="#md:build"><span>Build</span></a></li>
-<li><a href="#md:test"><span>Test</span></a></li></ul></li>
+<li><a href="#md:test"><span>Test</span></a></li></ul></li></ul></li>
 <li><a href="#md:warning"><span>Warning</span></a></li></ul></li></ul></li></ul></div></details></div>
 <div class="site-menu">
 <nav class="tsd-navigation"><a href="modules.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><g id="icon-4"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-namespace)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6"></rect><path d="M9.33 16V7.24H10.77L13.446 14.74C13.43 14.54 13.41 14.296 13.386 14.008C13.37 13.712 13.354 13.404 13.338 13.084C13.33 12.756 13.326 12.448 13.326 12.16V7.24H14.37V16H12.93L10.266 8.5C10.282 8.692 10.298 8.936 10.314 9.232C10.33 9.52 10.342 9.828 10.35 10.156C10.366 10.476 10.374 10.784 10.374 11.08V16H9.33Z" fill="var(--color-text)"></path></g></svg><span>@speakingsoftware/anonimizer</span></a>
