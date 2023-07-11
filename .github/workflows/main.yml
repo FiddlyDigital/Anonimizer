@@ -21,7 +21,7 @@ jobs:
           node-version: 18
 
       - name: Install Package Dependencies
-        run: npm i
+        run: npm ci
 
       - name: Build the Package
         run: npm run build
