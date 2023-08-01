@@ -89,6 +89,5 @@ npm run test
 
 ## Warning
 
-It's impossible to guarentee 100% safety and security when dealing with text replacing. No guarentee or warranty, implied or otherwise are offered. The author(s) of this library take no responsibility or nor accept andy liability for any loss that may result from usage of this library. Please always review the data you store and send to 3rd party systems, to ensure the transit ans storage complies with the legal requirements for your jurisdiction, industry and business obligations.
-
+Please always review the data you store and send to 3rd party systems, to ensure the transit and storage complies with the legal requirements for your jurisdiction, industry and business obligations. The author(s) of this library take no responsibility nor accept any liability for any loss that may occur from either correct or incorrect usage of this library. 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

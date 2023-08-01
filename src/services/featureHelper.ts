@@ -20,6 +20,16 @@ export class FeatureHelper {
      * @returns { string[] } An array with all instances of a named feature from a string
      */
     public static GetFeatureInstances (input: string, feature: Feature): string[] {
+        if (input === undefined ||
+            input.length === 0) {
+            throw new Error(`FeatureHelper.GetFeatureInstances - ${ErrorMessages.InputNullOrEmpty}`);
+        }
+
+        if (feature === undefined ||
+            feature.length === 0) {
+            throw new Error(`FeatureHelper.GetFeatureInstances - ${ErrorMessages.FeatureNullOrEmpty}`);
+        }
+
         let result: string[] = [];
 
         const nlpParsedInput: Three = nlp(input);
@@ -45,14 +55,18 @@ export class FeatureHelper {
                     .filter((person) => {
                         // Only return true for names that begin with capital letters. While not ideal;
                         // this helps avoid false-positives like 'mark', which are also verbs, or say month names
-                        return this.rgxUppercaseChars.test(person.charAt(0));
+                        return (person.charAt(0) === person.charAt(0).toUpperCase())
                     });
+                result = this.CheckForSplitsAndCorrect(result);
                 break;
             case Feature.Phonenumbers:
                 result = this.ExtractFeatureValuesFromNLP(nlpParsedInput.phoneNumbers());
                 break;
             case Feature.Urls:
                 result = this.ExtractFeatureValuesFromNLP(nlpParsedInput.urls());
+                break;
+            default:
+                // No action taken
                 break;
         }
 
@@ -72,6 +86,32 @@ export class FeatureHelper {
 
             return featureInstance;
         })
+    }
+
+    private static CheckForSplitsAndCorrect (featureInstances: string[]): string[] {
+        let index = 0;
+
+        while (index < featureInstances.length) {
+            // If there's a comma in this value split at the comma and add to the array.
+            // then remove the value containing the comma
+            if (featureInstances[index].indexOf(',') > 0) {
+                const splitValues = featureInstances[index].split(',');
+
+                splitValues.forEach(splitValue => {
+                    const trimmedVal = splitValue.trim();
+                    if (trimmedVal.length > 0) {
+                        featureInstances.push(splitValue.trim());
+                    }
+                });
+
+                featureInstances.splice(index, 1);
+                continue;
+            }
+
+            index++;
+        }
+
+        return featureInstances;
     }
 
     private static ExtractFeatureValuesFromNLP (featureNLP: Two | null): string[] {
