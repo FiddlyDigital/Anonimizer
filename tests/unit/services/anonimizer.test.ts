@@ -8,42 +8,46 @@ beforeAll(() => {
 
 describe('Anonimizer', () => {
     describe('anonimize', () => {
-        test('should throw when input is invalid', () => {
-            const input = '';
-            const featuresToReplace = new Array(Feature.People);
+        describe('Argument Tests', () => {
+            test('should throw when input is invalid', () => {
+                const input = '';
+                const featuresToReplace = new Array(Feature.People);
 
-            expect(() => {
-                anonimizer.anonimize(input, featuresToReplace);
-            }).toThrow(Error);
-        });
+                expect(() => {
+                    anonimizer.anonimize(input, featuresToReplace);
+                }).toThrow(Error);
+            });
 
-        test('should throw when FeatureToReplace is invalid', () => {
-            const input = 'Some input text';
-            const featuresToReplace = new Array();
+            test('should throw when FeatureToReplace is invalid', () => {
+                const input = 'Some input text';
+                const featuresToReplace = new Array();
 
-            expect(() => {
-                anonimizer.anonimize(input, featuresToReplace);
-            }).toThrow(Error);
+                expect(() => {
+                    anonimizer.anonimize(input, featuresToReplace);
+                }).toThrow(Error);
+            });
         });
     });
 
     describe('rehydrate', () => {
-        test('should throw when input is invalid', () => {
-            const input = '';
-            const runMap = new RunValueMap(new Array(Feature.People));
+        describe('Argument Tests', () => {
+            test('should throw when input is invalid', () => {
+                const input = '';
+                const runMap = new RunValueMap(new Array(Feature.People));
 
-            expect(() => {
-                anonimizer.reHydrate(input, runMap);
-            }).toThrow(Error);
-        });
+                expect(() => {
+                    anonimizer.reHydrate(input, runMap);
+                }).toThrow(Error);
+            });
 
-        test('should throw when runMap is invalid', () => {
-            const input = 'Some input text';
-            const runMap = new RunValueMap(new Array());
+            test('should throw when runMap is invalid', () => {
+                const input = 'Some input text';
+                const runMap = new RunValueMap(new Array());
 
-            expect(() => {
-                anonimizer.reHydrate(input, runMap);
-            }).toThrow(Error);
+                expect(() => {
+                    anonimizer.reHydrate(input, runMap);
+                }).toThrow(Error);
+            });
         });
     });
 });
