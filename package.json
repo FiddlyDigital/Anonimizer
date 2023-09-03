@@ -17,10 +17,18 @@
     "README.md",
     "package.json"
   ],
+  "homepage": "https://www.npmjs.com/package/@speakingsoftware/anonimizer",
   "repository": {
-    "url": "https://github.com/FiddlyDigital/Anonimizer"
+    "type": "git",
+    "url": "https://github.com/FiddlyDigital/Anonimizer.git"
   },
-  "author": "SpeakingSoftware / Philip Gannon",
+  "bugs": {
+    "url": "https://github.com/FiddlyDigital/Anonimizer/issues"
+  },
+  "author": {
+    "name": "SpeakingSoftware / Philip Gannon",
+    "url": "https://www.speakingsoftwareshow.com/"
+  },
   "license": "ISC",
   "keywords": [
     "anonimize",
